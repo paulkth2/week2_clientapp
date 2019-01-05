@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">week2</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="json_data">[
+ {
+        \"image\": \"freddie_mercury\",
+        \"name\": \"Freddie Mercury\",
+        \"job\": \"Vocal and Piano\",
+        \"birthDate\": \"1946.9.5\",
+        \"country\": \"Zanzibar\",
+        \"phoneNumber\": \"010-1234-5432\",
+        \"email\": \"mercuryF@gmail.com\",
+        \"gender\": \"Male\",
+        \"bloodGroup\": \"B\",
+        \"education\": \"Ealing College\"
+ },
+ {
+        \"image\": \"roger_taylor\",
+        \"name\": \"Roger Meddows Taylor\",
+        \"job\": \"Drum\",
+        \"birthDate\": \"1949.7.26\",
+        \"country\": \"England\",
+        \"phoneNumber\": \"010-5021-5432\",
+        \"email\": \"TaylorM@gmail.com\",
+        \"gender\": \"Male\",
+        \"bloodGroup\": \"O\",
+        \"education\": \"London Hospital Medical College\"
+ },
+ {
+        \"image\": \"brian_may\",
+        \"name\": \"Brian Harold May\",
+        \"job\": \"Guitar\",
+        \"birthDate\": \"1947.7.19\",
+        \"country\": \"England\",
+        \"phoneNumber\": \"010-8092-5022\",
+        \"email\": \"MayB@gmail.com\",
+        \"gender\": \"Male\",
+        \"bloodGroup\": \"B\",
+        \"education\": \"Imperial College London\"
+ },
+ {
+        \"image\": \"john_deacon\",
+        \"name\": \"John Richard Deacon\",
+        \"job\": \"Base\",
+        \"birthDate\": \"1951.8.19\",
+        \"country\": \"England\",
+        \"phoneNumber\": \"010-5513-0931\",
+        \"email\": \"DeaconJ@gmail.com\",
+        \"gender\": \"Male\",
+        \"bloodGroup\": \"O\",
+        \"education\": \"Chelsea College\"
+ }
+
+]
+    </string>
+
+</resources>
