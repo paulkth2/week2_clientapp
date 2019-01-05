@@ -21,5 +21,5 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="105dp"
         android:layout_marginTop="94dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/add" />
 </RelativeLayout>
