@@ -18,6 +18,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         if (position == 0){
             return new listFragment();
         }
+        else if (position == 1){
+            return new ImageUploadFragment();
+        }
 
         else {
             DemoFragment demoFragment = new DemoFragment();
