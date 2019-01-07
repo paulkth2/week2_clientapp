@@ -2,7 +2,7 @@ package com.example.taehyungkim.week2;
 
 public class list_item {
 
-    private int profile_image;
+    private String profile_image;
     private String name;
     private String phonenum;
     private String email;
@@ -61,11 +61,11 @@ public class list_item {
         this.educaion = educaion;
     }
 
-    public int getProfile_image() {
+    public String getProfile_image() {
         return profile_image;
     }
 
-    public void setProfile_image(int profile_image) {
+    public void setProfile_image(String profile_image) {
         this.profile_image = profile_image;
     }
 
@@ -93,7 +93,7 @@ public class list_item {
         this.email = email;
     }
 
-    public list_item(int profile_image, String name, String phonenum, String email, String job, String country, String gender, String bloodgroup, String educaion, String birthdate) {
+    public list_item(String profile_image, String name, String phonenum, String email, String job, String country, String gender, String bloodgroup, String educaion, String birthdate) {
         this.profile_image = profile_image;
         this.name = name;
         this.phonenum = phonenum;

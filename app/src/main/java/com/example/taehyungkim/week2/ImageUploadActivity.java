@@ -1,7 +1,11 @@
 package com.example.taehyungkim.week2;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -28,6 +32,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +47,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -65,6 +78,10 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
     Bitmap mBitmap;
     TextView textView;
 
+    String url = "http://socrip3.kaist.ac.kr:9180/images";
+
+    Intent resultIntent = new Intent();
+    Boolean uploaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +99,10 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
 
 
     }
+
+    Date from = new Date();
+
+    SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
     private void askPermissions() {
         permissions.add(CAMERA);
@@ -289,7 +310,7 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
     private void multipartImageUpload() {
         try {
             File filesDir = getApplicationContext().getFilesDir();
-            File file = new File(filesDir, "image" + ".png");
+            File file = new File(filesDir, "image" + transFormat.format(Calendar.getInstance().getTime()) + ".png");
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
@@ -314,6 +335,35 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
                     if (response.code() == 200) {
                         textView.setText("Uploaded Successfully!");
                         textView.setTextColor(Color.BLUE);
+                        try {
+                            JSONObject new_contact = new JSONObject();
+
+                            //testView.setText("Array loading succeed.");
+
+                            new_contact.put("email", "paulkth2@naver.com");
+                            new_contact.put("imageName", file.getName());
+                            resultIntent.putExtra("imageName", file.getName());
+                            uploaded = true;
+
+                            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, new_contact, new com.android.volley.Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+
+                                    //testText.setText("succeed"+response.toString());
+                                }
+                            }, new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+
+                                    //testText.setText("fail");
+                                }
+                            });
+
+                            Volley.newRequestQueue(ImageUploadActivity.this).add(jsonRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
@@ -352,4 +402,19 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            if (!uploaded){
+                resultIntent.putExtra("imageName", "none");
+            }
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

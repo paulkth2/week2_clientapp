@@ -53,7 +53,12 @@ public class MyListAdapter extends BaseAdapter {
         name_textView.setText(list_itemArrayList.get(position).getName());
         phonenum_textView.setText(list_itemArrayList.get(position).getPhonenum());
         email_textView.setText(list_itemArrayList.get(position).getEmail());
-        profile_imageView.setImageResource(list_itemArrayList.get(position).getProfile_image());
+        int checkExistence = context.getResources().getIdentifier(list_itemArrayList.get(position).getProfile_image(), "drawable", context.getPackageName());
+        if (checkExistence != 0){
+            profile_imageView.setImageResource(checkExistence);}
+        else{
+            profile_imageView.setImageResource(R.mipmap.ic_launcher);
+        }
 
         return convertView;
     }

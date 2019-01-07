@@ -98,7 +98,7 @@ public class AddActivity extends AppCompatActivity {
                     JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, new_contact, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            
+
                             //testText.setText("succeed"+response.toString());
                         }
                     }, new Response.ErrorListener() {

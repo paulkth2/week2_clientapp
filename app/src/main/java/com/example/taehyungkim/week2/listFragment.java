@@ -142,11 +142,11 @@ public class listFragment extends Fragment {
                                 int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
 
                                 if (checkExistence != 0) {
-                                    list_itemArrayList.add(new list_item(checkExistence, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                    list_itemArrayList.add(new list_item(image, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                     //Log.d("addwithExistence", "Yeah");
 
                                 } else {
-                                    list_itemArrayList.add(new list_item(R.mipmap.ic_launcher, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                    list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                     //Log.d("addwithExistence", "Nooo");
                                 }
                                 //Log.d("list_size", String.valueOf(list_itemArrayList.size()));
@@ -179,6 +179,64 @@ public class listFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                list_itemArrayList.clear();
+
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                        Request.Method.GET,
+                        url,
+                        (String)null,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                // Do something with response
+                                //mTextView.setText(response.toString());
+
+                                // Process the JSON
+                                try {
+                                    JSONArray contact = response;
+
+                                    for (int i = 0; i < contact.length(); i++) {
+                                        JSONObject jObject = contact.getJSONObject(i);
+
+                                        String image = jObject.getString("image");
+                                        String name = jObject.getString("name");
+                                        String phonenum = jObject.getString("phoneNumber");
+                                        String email = jObject.getString("email");
+                                        String job = jObject.getString("job");
+                                        String country = jObject.getString("country");
+                                        String gender = jObject.getString("gender");
+                                        String bloodgroup = jObject.getString("bloodGroup");
+                                        String education =  jObject.getString("education");
+                                        String birthdate = jObject.getString("birthDate");
+                                        //Log.d("ObjectValues", image+name+phonenum);
+                                        int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
+                                        Log.d("This is Identifier", String.valueOf(checkExistence));
+                                        if (checkExistence != 0) {
+                                            list_itemArrayList.add(new list_item(image, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                            //Log.d("addwithExistence", "Yeah");
+
+                                        } else {
+                                            list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                            //Log.d("addwithExistence", "Nooo");
+                                        }
+                                        //Log.d("list_size", String.valueOf(list_itemArrayList.size()));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // Do something when error occurred
+                            }
+                        }
+
+
+                );
+
+                Volley.newRequestQueue(getContext()).add(jsonArrayRequest);
 
                 if (FAB_Status == false) {
                     //Display FAB menu
@@ -196,24 +254,35 @@ public class listFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    //testView.setText("parsing tried");
-                    JSONArray contact = new JSONArray(json_data);
+                    //testView.setText("parsing tried")
                     //testView.setText("Array loading succeed.");
-                    for (int i = 0; i < contact.length(); i++) {
-                                JSONObject jObject = contact.getJSONObject(i);
-                                JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jObject, new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        //TODO: handle success
+                    for (int i = 0; i < list_itemArrayList.size(); i++) {
 
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                                //TODO: handle failure
+                        JSONObject jObject = new JSONObject();
+
+                        jObject.put("image", list_itemArrayList.get(i).getProfile_image());
+                        jObject.put("name", list_itemArrayList.get(i).getName());
+                        jObject.put("phoneNumber", list_itemArrayList.get(i).getPhonenum());
+                        jObject.put("email", list_itemArrayList.get(i).getEmail());
+                        jObject.put("job", list_itemArrayList.get(i).getJob());
+                        jObject.put("country", list_itemArrayList.get(i).getCountry());
+                        jObject.put("gender", list_itemArrayList.get(i).getGender());
+                        jObject.put("bloodGroup", list_itemArrayList.get(i).getBloodgroup());
+                        jObject.put("education", list_itemArrayList.get(i).getEducaion());
+                        jObject.put("birthDate", list_itemArrayList.get(i).getBirthdate());
+
+                        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jObject, new Response.Listener<JSONObject>() {
+                                @Override
+                            public void onResponse(JSONObject response) {
+                                //TODO: handle success
+
                             }
-                        });
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                    //TODO: handle failure
+                        }});
 
                         Volley.newRequestQueue(getContext()).add(jsonRequest);
                     }
@@ -242,6 +311,23 @@ public class listFragment extends Fragment {
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(getActivity(), ProfileActivity.class);
+                myIntent.putExtra("image", list_itemArrayList.get(position).getProfile_image());
+                myIntent.putExtra("name", list_itemArrayList.get(position).getName());
+                myIntent.putExtra("phone number", list_itemArrayList.get(position).getPhonenum());
+                myIntent.putExtra("email", list_itemArrayList.get(position).getEmail());
+                myIntent.putExtra("job", list_itemArrayList.get(position).getJob());
+                myIntent.putExtra("country", list_itemArrayList.get(position).getCountry());
+                myIntent.putExtra("gender", list_itemArrayList.get(position).getGender());
+                myIntent.putExtra("blood group", list_itemArrayList.get(position).getBloodgroup());
+                myIntent.putExtra("education", list_itemArrayList.get(position).getEducaion());
+                myIntent.putExtra("birth date", list_itemArrayList.get(position).getBirthdate());
+                startActivity(myIntent);
+            }
+        });
 
 
         return view;
