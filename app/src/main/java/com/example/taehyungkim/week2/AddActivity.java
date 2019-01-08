@@ -92,6 +92,7 @@ public class AddActivity extends AppCompatActivity {
                     new_contact.put("birthDate", birthdate_string);
                     new_contact.put("bloodGroup", bloodgroup_string);
                     new_contact.put("education", education_string);
+                    new_contact.put("loginEmail", MainActivity.login_email);
 
 
 

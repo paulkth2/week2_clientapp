@@ -109,11 +109,11 @@ public class listFragment extends Fragment {
         String json_data = MyJSON.getData(getActivity().getApplicationContext());
 
             //testView.setText("parsing tried");
-
+        Log.d("login_email?", MainActivity.login_email);
         // Initialize a new JsonArrayRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                url,
+                url+"/"+MainActivity.login_email,
                 (String)null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -183,7 +183,7 @@ public class listFragment extends Fragment {
 
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         Request.Method.GET,
-                        url,
+                        url+"/"+MainActivity.login_email,
                         (String)null,
                         new Response.Listener<JSONArray>() {
                             @Override
@@ -270,6 +270,8 @@ public class listFragment extends Fragment {
                         jObject.put("bloodGroup", list_itemArrayList.get(i).getBloodgroup());
                         jObject.put("education", list_itemArrayList.get(i).getEducaion());
                         jObject.put("birthDate", list_itemArrayList.get(i).getBirthdate());
+                        jObject.put("loginEmail", MainActivity.login_email);
+
 
                         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jObject, new Response.Listener<JSONObject>() {
                                 @Override
