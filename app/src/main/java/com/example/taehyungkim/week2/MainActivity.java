@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private String user_info;
 
     public static String login_email;
+
     /*
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
     public static final String ALLOW_KEY = "ALLOWED";
