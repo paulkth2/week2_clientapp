@@ -19,6 +19,12 @@ import java.util.HashMap;
 
 public class DemoFragment extends Fragment {
     int i;
+    public static ArrayList<String> cities;
+    public static int a = 0;
+    public static int country_n = 0;
+    public static int city_n = 0;
+    public static String selected_city;
+    public static String selected_country;
 
     public DemoFragment() {
         // Required empty public constructor
@@ -32,7 +38,7 @@ public class DemoFragment extends Fragment {
         //like if the class is HomeFragment it should have R.layout.home_fragment
         //if it is DashboardFragment it should have R.layout.fragment_dashboard
         final HashMap<String, ArrayList<String>> europe = new HashMap<>();
-        final ArrayList<Integer> selected = new ArrayList<Integer>();
+//        final ArrayList<Integer> selected = new ArrayList<Integer>();
 
 
         ArrayList<String> uk = new ArrayList<String>();
@@ -40,6 +46,7 @@ public class DemoFragment extends Fragment {
         ArrayList<String> spain = new ArrayList<String>();
         View view = inflater.inflate(R.layout.fragment_demo, container, false);
         final TextView text_country = view.findViewById(R.id.country);
+        final TextView text_city = view.findViewById(R.id.city);
 
 
         final String[] country =  {"uk", "france", "spain"};
@@ -49,9 +56,9 @@ public class DemoFragment extends Fragment {
         france.add("nice");
         spain.add("madrid");
         spain.add("barcelona");
-        europe.put("UK", uk);
-        europe.put("FRANCE", france);
-        europe.put("SPAIN", spain);
+        europe.put("uk", uk);
+        europe.put("france", france);
+        europe.put("spain", spain);
 
 
         text_country.setOnClickListener(new View.OnClickListener() {
@@ -64,17 +71,21 @@ public class DemoFragment extends Fragment {
                 builder.setSingleChoiceItems(country, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        selected.add(which);
+                        country_n = which;
                     }
                 });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        text_country.setText(country[selected.get(0)]);
-//                        ArrayList<String> tmp = europe.get(country[selected.get(0)]);
+
+                        selected_country = country[country_n];
+                        text_country.setText(selected_country);
+                        text_city.setText("City");
+                        cities = europe.get(country[country_n]);
+                        a = 1;
 //                        Log.d("ASFASDF", Integer.toString(tmp.size()));
 //                        Intent intent = new Intent(getContext(), city.class);
-//                        intent.putExtra("list", tmp);
+//                        intent.putExtra("list", cities);
 //                        startActivity(intent);
 
                     }
@@ -87,32 +98,36 @@ public class DemoFragment extends Fragment {
         });
 
         // city
-//        final String[] cities = new String[tmp.size()];
-//        text_city.setOnClickListener(new View.OnClickListener() {
-//
-//
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//                builder.setTitle("Choose a country");
-//                int checkedItem = 1;
-//                builder.setSingleChoiceItems(tmp.toArray(cities), checkedItem, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        text_country.setText("checked");
-//                    }
-//                });
-//                builder.setNegativeButton("Cancel", null);
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//            }
-//        });
+
+        text_city.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Choose a city");
+                int checkedItem = 1;
+                if(a == 1) {
+                    final String[] tmp = new String[cities.size()];
+                    builder.setSingleChoiceItems(cities.toArray(tmp), checkedItem, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            city_n = which;
+                        }
+                    });
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selected_city = tmp[city_n];
+                            text_city.setText(selected_city);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+
 
         return view;
     }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="4"
-    tools:context=".DemoFragment">
+    tools:context=".city">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,26 +23,13 @@
 
 
     <TextView
-        android:id="@+id/country"
-        android:textSize = "20dp"
+        android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="174dp"
+        android:layout_marginBottom="153dp"
         android:text="Country" />
-
-    <TextView
-        android:id="@+id/city"
-        android:textSize = "20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/country"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="98dp"
-        android:text="City" />
-
 
 
 
