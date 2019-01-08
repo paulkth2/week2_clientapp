@@ -47,7 +47,6 @@ public class MyTripAdapter extends BaseAdapter {
         name_textView = (TextView)convertView.findViewById(R.id.title_textview);
        // }
         name_textView.setText(TitleArrayList.get(position));
-
         return convertView;
     }
 

@@ -55,6 +55,7 @@
     <activity android:name=".LargeImageActivity"/>
     <activity android:name=".ProfileSelectActivity"/>
     <activity android:name=".TitleActivity"/>
+    <activity android:name=".ContentActivity"/>
     </application>
 
 

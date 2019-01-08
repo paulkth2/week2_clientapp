@@ -49,7 +49,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             return "GALLERY";
         }
         if(position == 2) {
-            return "MUSIC";
+            return "TRIP";
         }
 
         else{

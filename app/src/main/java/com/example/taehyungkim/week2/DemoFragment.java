@@ -190,6 +190,8 @@ public class DemoFragment extends Fragment {
             public void onClick(View v) {
                 Intent myIntent = new Intent(getActivity(), TitleActivity.class);
                 myIntent.putExtra("the_list", the_list);
+                myIntent.putExtra("country", selected_country);
+                myIntent.putExtra("city", selected_city);
                 startActivity(myIntent) ;
             }
         });
