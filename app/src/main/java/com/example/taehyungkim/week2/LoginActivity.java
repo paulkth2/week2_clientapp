@@ -34,6 +34,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -114,18 +116,6 @@ public class LoginActivity extends AppCompatActivity {
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                final String strEmail = email.getText().toString();
-//                final String strPassword = password.getText().toString();
-//                try {
-//                    JSONObject user = mTextFileMgr.save(strEmail, strPassword);
-//                    Log.d("LOG", user.toString());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                email.setText("");
-//                password.setText("");
-////                Intent intent = new Intent(MainActivity.this, main_app.class);
-////                startActivity(intent);
                 try {
                     loginUser(email.getText().toString(), password.getText().toString());
                     email.setText("");
@@ -263,14 +253,24 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void accept(String response) throws Exception {
-                Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
                 JSONObject information = new JSONObject();
                 information.put("email", email);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("user_info", information.toString());
                 startActivity(intent);
+
             }
-        }));
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Toast.makeText(LoginActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
+            }
+        })
+
+        );
+
 
     }
 }
