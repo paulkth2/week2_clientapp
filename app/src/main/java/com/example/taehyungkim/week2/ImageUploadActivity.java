@@ -340,7 +340,7 @@ public class ImageUploadActivity extends AppCompatActivity implements View.OnCli
 
                             //testView.setText("Array loading succeed.");
 
-                            new_contact.put("email", "paulkth2@naver.com");
+                            new_contact.put("email", MainActivity.login_email);
                             new_contact.put("imageName", file.getName());
                             resultIntent.putExtra("imageName", file.getName());
                             uploaded = true;

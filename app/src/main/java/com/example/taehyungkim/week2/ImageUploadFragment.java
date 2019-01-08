@@ -53,7 +53,7 @@ public class ImageUploadFragment extends Fragment{
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                url,
+                url+"/"+MainActivity.login_email,
                 (String)null,
                 new Response.Listener<JSONArray>() {
                     @Override

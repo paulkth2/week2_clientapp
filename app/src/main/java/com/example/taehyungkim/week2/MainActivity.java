@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private File myJSON;
 
     private String user_info;
+
+    public static String login_email;
     /*
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
     public static final String ALLOW_KEY = "ALLOWED";
@@ -48,7 +51,14 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         user_info = getIntent().getStringExtra("user_info");
-        Log.d("user_info", user_info);
+
+        try {
+            JSONObject user = new JSONObject(user_info);
+            login_email = user.getString("email");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
 
         String json_data = getString(R.string.json_data);
 
