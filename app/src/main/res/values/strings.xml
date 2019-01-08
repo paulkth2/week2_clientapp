@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">week2</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">520621628457883</string>
 
     <string name="json_data">[
  {

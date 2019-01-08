@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private File myJSON;
 
-
+    private String user_info;
     /*
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 100;
     public static final String ALLOW_KEY = "ALLOWED";
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        user_info = getIntent().getStringExtra("user_info");
+        Log.d("user_info", user_info);
 
         String json_data = getString(R.string.json_data);
 

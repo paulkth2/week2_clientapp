@@ -42,14 +42,13 @@ public class MyListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null){
+        //if(convertView==null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item,null);
             name_textView = (TextView)convertView.findViewById(R.id.name_textview);
             phonenum_textView = (TextView)convertView.findViewById(R.id.phonenum_textview);
             email_textView = (TextView)convertView.findViewById(R.id.email_textview);
             profile_imageView = (ImageView)convertView.findViewById(R.id.profile_imageview);
-        }
-
+       // }
         name_textView.setText(list_itemArrayList.get(position).getName());
         phonenum_textView.setText(list_itemArrayList.get(position).getPhonenum());
         email_textView.setText(list_itemArrayList.get(position).getEmail());
