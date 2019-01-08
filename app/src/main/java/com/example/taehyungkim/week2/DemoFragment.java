@@ -59,6 +59,8 @@ public class DemoFragment extends Fragment {
         ArrayList<String> uk = new ArrayList<String>();
         ArrayList<String> france = new ArrayList<String>();
         ArrayList<String> spain = new ArrayList<String>();
+        ArrayList<String> germany = new ArrayList<String>();
+        ArrayList<String> italy = new ArrayList<String>();
         ArrayList<String> the_list = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_demo, container, false);
         final TextView text_country = view.findViewById(R.id.country);
@@ -66,15 +68,14 @@ public class DemoFragment extends Fragment {
 
         start_button = (Button) view.findViewById(R.id.button2);
 
-        final String[] country =  {"UK", "France", "Spain"};
-        uk.add("London");
-        uk.add("Oxford");
-        france.add("Paris");
-        france.add("Nice");
-        spain.add("Madrid");
-        spain.add("Barcelona");
-        europe.put("UK", uk);
-        europe.put("France", france);
+        final String[] country =  {"UK", "France", "Spain", "Germany", "Italy"};
+        uk.add("London"); uk.add("oxford"); uk.add("Edinburgh"); uk.add("Birmingham");
+        france.add("Paris"); france.add("Nice"); france.add("Marseille"); france.add("Lyon");
+        spain.add("Madrid"); spain.add("Barcelona"); spain.add("Seville"); spain.add("Valencia");
+        germany.add("Berlin"); germany.add("Munchen"); germany.add("Frankfurt"); germany.add("Koln");
+        italy.add("Rome"); italy.add("Milan"); italy.add("Venice"); italy.add("Florence");
+        europe.put("UK", uk); europe.put("Germany", germany);
+        europe.put("France", france); europe.put("Italy", italy);
         europe.put("Spain", spain);
 
 

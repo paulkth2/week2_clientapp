@@ -2,17 +2,26 @@ package com.example.taehyungkim.week2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +46,7 @@ public class TitleActivity extends AppCompatActivity {
         setContentView(R.layout.title_activity);
 
         title_list = (ListView) findViewById(R.id.title_listview);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         the_list = getIntent().getStringArrayListExtra("the_list");
 
@@ -90,5 +100,48 @@ public class TitleActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final View register_layout = LayoutInflater.from(TitleActivity.this)
+                        .inflate(R.layout.register_layout, null);
+                new MaterialStyledDialog.Builder(TitleActivity.this)
+                        .setIcon(R.drawable.ic_home_black_24dp)
+                        .setTitle("NEW CONTENT")
+                        .setCustomView(register_layout)
+                        .setNegativeText("CANCEL")
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveText("ADD")
+                        .setDescription("Please fill all fields")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                MaterialEditText edit_title = register_layout.findViewById(R.id.title);
+                                MaterialEditText edit_content = register_layout.findViewById(R.id.content);
+
+                                if(TextUtils.isEmpty(edit_title.getText().toString())) {
+                                    Toast.makeText(TitleActivity.this, "Title cannot be null or empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                if(TextUtils.isEmpty(edit_content.getText().toString())) {
+                                    Toast.makeText(TitleActivity.this, "Content cannot be null or empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                // add new data into DB
+                            }
+                        }).show();
+
+            }
+        });
+
+
     }
 }

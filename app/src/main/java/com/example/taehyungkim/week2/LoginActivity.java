@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Toast.makeText(LoginActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "wrong information", Toast.LENGTH_SHORT).show();
             }
         })
 

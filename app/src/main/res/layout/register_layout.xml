@@ -7,8 +7,8 @@
     android:padding="20dp">
 
     <com.rengwuxian.materialedittext.MaterialEditText
-    android:id = "@+id/email"
-    android:hint = "Email"
+    android:id = "@+id/title"
+    android:hint = "Title"
     android:inputType="textEmailAddress"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,23 +17,15 @@
     app:met_primaryColor="@color/myTextColor" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
-        android:id = "@+id/name"
-        android:hint = "Name"
-        android:inputType="textEmailAddress"
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:met_textColorHint = "@color/myTextColor"
+        android:layout_height="193dp"
+        android:hint="Content"
+        android:inputType="textEmailAddress"
         app:met_baseColor="@color/myTextColor"
-        app:met_primaryColor="@color/myTextColor" />
+        app:met_primaryColor="@color/myTextColor"
+        app:met_textColorHint="@color/myTextColor" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id = "@+id/password"
-        android:hint = "Password"
-        android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:met_textColorHint = "@color/myTextColor"
-        app:met_baseColor="@color/myTextColor"
-        app:met_primaryColor="@color/myTextColor" />
+
 
 </LinearLayout>
