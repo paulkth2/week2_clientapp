@@ -54,6 +54,7 @@
         <activity android:name=".city"></activity>
     <activity android:name=".LargeImageActivity"/>
     <activity android:name=".ProfileSelectActivity"/>
+    <activity android:name=".TitleActivity"/>
     </application>
 
 

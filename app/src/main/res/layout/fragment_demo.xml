@@ -43,9 +43,15 @@
         android:layout_marginBottom="98dp"
         android:text="City" />
 
-
-
-
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="26dp"
+        android:text="Search" />
 
 
 </RelativeLayout>

@@ -12,7 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +34,12 @@ public class DemoFragment extends Fragment {
     public static int a = 0;
     public static int country_n = 0;
     public static int city_n = 0;
-    public static String selected_city;
-    public static String selected_country;
+    public static String selected_city ="";
+    public static String selected_country ="";
+
+    String url = "http://socrip3.kaist.ac.kr:9180/trips";
+
+    Button start_button;
 
     public DemoFragment() {
         // Required empty public constructor
@@ -44,21 +59,23 @@ public class DemoFragment extends Fragment {
         ArrayList<String> uk = new ArrayList<String>();
         ArrayList<String> france = new ArrayList<String>();
         ArrayList<String> spain = new ArrayList<String>();
+        ArrayList<String> the_list = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_demo, container, false);
         final TextView text_country = view.findViewById(R.id.country);
         final TextView text_city = view.findViewById(R.id.city);
 
+        start_button = (Button) view.findViewById(R.id.button2);
 
-        final String[] country =  {"uk", "france", "spain"};
-        uk.add("london");
-        uk.add("oxford");
-        france.add("paris");
-        france.add("nice");
-        spain.add("madrid");
-        spain.add("barcelona");
-        europe.put("uk", uk);
-        europe.put("france", france);
-        europe.put("spain", spain);
+        final String[] country =  {"UK", "France", "Spain"};
+        uk.add("London");
+        uk.add("Oxford");
+        france.add("Paris");
+        france.add("Nice");
+        spain.add("Madrid");
+        spain.add("Barcelona");
+        europe.put("UK", uk);
+        europe.put("France", france);
+        europe.put("Spain", spain);
 
 
         text_country.setOnClickListener(new View.OnClickListener() {
@@ -119,16 +136,63 @@ public class DemoFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             selected_city = tmp[city_n];
                             text_city.setText(selected_city);
+                            the_list.clear();
+                            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                                    Request.Method.GET,
+                                    url+"/"+selected_country+"/"+selected_city,
+                                    (String)null,
+                                    new Response.Listener<JSONArray>() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+                                            // Do something with response
+                                            //mTextView.setText(response.toString());
+
+                                            // Process the JSON
+                                            try {
+                                                JSONArray contact = response;
+
+                                                for (int i = 0; i < contact.length(); i++) {
+                                                    JSONObject jObject = contact.getJSONObject(i);
+                                                    //Log.d("Object", "ha");
+                                                    if(!jObject.getString("contents").isEmpty()) {
+                                                        the_list.add(jObject.getString("title"));
+                                                        //Log.d("Title", jObject.getString("title"));
+                                                    }
+                                                    //Log.d("ImageID", imageName);
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            // Do something when error occurred
+                                        }
+                                    }
+
+                            );
+
+                            Volley.newRequestQueue(getContext()).add(jsonArrayRequest);
                         }
                     });
                     builder.setNegativeButton("Cancel", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
+
                 }
             }
         });
 
-
+        start_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getActivity(), TitleActivity.class);
+                myIntent.putExtra("the_list", the_list);
+                startActivity(myIntent) ;
+            }
+        });
         return view;
     }
 
