@@ -1,7 +1,9 @@
 package com.example.taehyungkim.week2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,19 +15,23 @@ import android.widget.Button;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddActivity extends AppCompatActivity {
     Intent intent;
 
-    CircleImageView profile;
+    SimpleDraweeView profile;
     TextInputLayout name;
     TextInputLayout job;
     TextInputLayout country;
@@ -38,7 +44,12 @@ public class AddActivity extends AppCompatActivity {
 
     Button submitButton;
 
+    String image_name = "blank image";
+
     String url = "http://socrip3.kaist.ac.kr:9180/api/users";
+    String url2 = "http://socrip3.kaist.ac.kr:9180/images";
+
+    ArrayList<String> imageIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +58,7 @@ public class AddActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        profile = (CircleImageView) findViewById(R.id.profile_show);
+        profile = (SimpleDraweeView) findViewById(R.id.profile_edit);
         name = (TextInputLayout) findViewById(R.id.name_input);
         job = (TextInputLayout) findViewById(R.id.job_input);
         country = (TextInputLayout) findViewById(R.id.country_input);
@@ -59,6 +70,53 @@ public class AddActivity extends AppCompatActivity {
         education = (TextInputLayout) findViewById(R.id.education_input);
 
         submitButton = (Button) findViewById(R.id.submit_button);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url2+"/"+MainActivity.login_email,
+                (String)null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        // Process the JSON
+                        try {
+                            JSONArray contact = response;
+
+                            for (int i = 0; i < contact.length(); i++) {
+                                JSONObject jObject = contact.getJSONObject(i);
+
+                                String imageName = jObject.getString("imageName");
+                                imageIDs.add(imageName);
+                                //Log.d("ImageID", imageName);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Do something when error occurred
+                    }
+                }
+
+
+        );
+
+        Volley.newRequestQueue(AddActivity.this).add(jsonArrayRequest);
+
+        profile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(AddActivity.this, ProfileSelectActivity.class);
+                myintent.putExtra("imageIDs", imageIDs);
+                startActivityForResult(myintent, 1);
+            }
+        });
 
         submitButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -82,7 +140,7 @@ public class AddActivity extends AppCompatActivity {
 
                     //testView.setText("Array loading succeed.");
 
-                    new_contact.put("image", "blank image");
+                    new_contact.put("image", image_name);
                     new_contact.put("name", name_string);
                     new_contact.put("job", job_string);
                     new_contact.put("country", country_string);
@@ -139,6 +197,24 @@ public class AddActivity extends AppCompatActivity {
         if (views != null) {
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(views.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String returnImageName = data.getStringExtra("imageName");
+                    if (returnImageName != "none"){
+                        image_name = returnImageName;
+                        Uri uri = Uri.parse("http://socrip3.kaist.ac.kr:9180/uploads/"+image_name);
+                        profile.setImageURI(uri);
+                    }
+                }
+                break;
+            }
         }
     }
 }

@@ -139,16 +139,16 @@ public class listFragment extends Fragment {
                                 String education = jObject.getString("education");
                                 String birthdate = jObject.getString("birthDate");
                                 //Log.d("ObjectValues", image+name+phonenum);
-                                int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
+                                //int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
 
-                                if (checkExistence != 0) {
+                                //if (checkExistence != 0) {
                                     list_itemArrayList.add(new list_item(image, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                     //Log.d("addwithExistence", "Yeah");
 
-                                } else {
-                                    list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                //} else {
+                                //    list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                     //Log.d("addwithExistence", "Nooo");
-                                }
+                                //}
                                 //Log.d("list_size", String.valueOf(list_itemArrayList.size()));
                             }
                         } catch (JSONException e) {
@@ -209,16 +209,16 @@ public class listFragment extends Fragment {
                                         String education =  jObject.getString("education");
                                         String birthdate = jObject.getString("birthDate");
                                         //Log.d("ObjectValues", image+name+phonenum);
-                                        int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
-                                        Log.d("This is Identifier", String.valueOf(checkExistence));
-                                        if (checkExistence != 0) {
-                                            list_itemArrayList.add(new list_item(image, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                        //int checkExistence = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
+                                        //Log.d("This is Identifier", String.valueOf(checkExistence));
+                                        //if (checkExistence != 0) {
+                                        list_itemArrayList.add(new list_item(image, name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                             //Log.d("addwithExistence", "Yeah");
 
-                                        } else {
-                                            list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
+                                        //} else {
+                                        //    list_itemArrayList.add(new list_item("blank image", name, phonenum, email, job, country, gender, bloodgroup, education, birthdate));
                                             //Log.d("addwithExistence", "Nooo");
-                                        }
+                                        //}
                                         //Log.d("list_size", String.valueOf(list_itemArrayList.size()));
                                     }
                                 } catch (JSONException e) {
