@@ -16,13 +16,13 @@ import java.util.ArrayList;
 
 public class MyListAdapter extends BaseAdapter {
 
-    Context context;
-    ArrayList<list_item> list_itemArrayList;
+    private Context context;
+    private ArrayList<list_item> list_itemArrayList;
 
-    TextView name_textView;
-    TextView phonenum_textView;
-    TextView email_textView;
-    SimpleDraweeView profile_imageView;
+    private TextView name_textView;
+    private TextView phonenum_textView;
+    private TextView email_textView;
+    private SimpleDraweeView profile_imageView;
 
     public MyListAdapter(Context context, ArrayList<list_item> list_itemArrayList) {
         this.context = context;
@@ -47,11 +47,12 @@ public class MyListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //if(convertView==null)
+
         convertView = LayoutInflater.from(context).inflate(R.layout.item,null);
         name_textView = (TextView)convertView.findViewById(R.id.name_textview);
         phonenum_textView = (TextView)convertView.findViewById(R.id.phonenum_textview);
         email_textView = (TextView)convertView.findViewById(R.id.email_textview);
-        profile_imageView = (SimpleDraweeView) convertView.findViewById(R.id.profile_imageview);
+        profile_imageView = (SimpleDraweeView) convertView.findViewById(R.id.profile_view);
        // }
         name_textView.setText(list_itemArrayList.get(position).getName());
         phonenum_textView.setText(list_itemArrayList.get(position).getPhonenum());

@@ -14,7 +14,7 @@ public class MyCommentAdapter extends BaseAdapter {
     Context context;
     ArrayList<String> TitleArrayList;
 
-    TextView name_textView;
+    TextView name2_textView;
 
 
     public MyCommentAdapter(Context context, ArrayList<String> TitleArrayList) {
@@ -41,9 +41,9 @@ public class MyCommentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         //if(convertView==null)
         convertView = LayoutInflater.from(context).inflate(R.layout.comment,null);
-        name_textView = (TextView)convertView.findViewById(R.id.comment);
+        name2_textView = (TextView)convertView.findViewById(R.id.comment);
        // }
-        name_textView.setText(TitleArrayList.get(position));
+        name2_textView.setText(TitleArrayList.get(position));
         return convertView;
     }
 

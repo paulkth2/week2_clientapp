@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -53,6 +54,9 @@ public class TitleActivity extends AppCompatActivity {
         myTripAdapter = new MyTripAdapter(TitleActivity.this, the_list);
         title_list.setAdapter(myTripAdapter);
 
+        country = getIntent().getStringExtra("country");
+        city = getIntent().getStringExtra("city");
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 url+"/"+getIntent().getStringExtra("country")+"/"+getIntent().getStringExtra("city"),
@@ -68,13 +72,45 @@ public class TitleActivity extends AppCompatActivity {
                             JSONArray contact = response;
 
                             for (int i = 0; i < contact.length(); i++) {
+                                Boolean exists = false;
+                                Integer Position = 0;
+                                contents nowtact = new contents("","",new ArrayList<>());
+
                                 JSONObject jObject = contact.getJSONObject(i);
+                                String title = jObject.getString("title");
+
+                                for (int j =0; j<c_list.size(); j++){
+                                    //Log.d("title/c_listtitle", title+"/"+c_list.get(j).getCtitle());
+                                    if (c_list.get(j).getCtitle().equals(title)){
+                                        Position = j;
+                                        exists = true;
+                                        nowtact = c_list.get(j);
+                                        //Log.d("position/exists/title", Position+exists.toString()+title);
+                                        break;
+                                    }
+                                }
+                                if(!exists){
+                                    nowtact.setCtitle(title);
+                                    //Log.d("heh", "duh");
+                                }
                                 //Log.d("Object", "ha");
                                 if(!jObject.getString("contents").isEmpty()) {
-                                    String title = jObject.getString("title");
                                     String content = jObject.getString("contents");
-                                    c_list.add(new contents(title, content));
+                                    nowtact.setCcontent(content);
                                     //Log.d("Title", jObject.getString("title"));
+                                }
+                                else{
+                                    String comment = jObject.getString("comments");
+                                    ArrayList<String> newcomment = nowtact.getCcomments();
+                                    newcomment.add(comment);
+                                    nowtact.setCcomments(newcomment);
+                                }
+
+                                if(exists){
+                                    c_list.set(Position, nowtact);
+                                }
+                                else{
+                                    c_list.add(nowtact);
                                 }
                                 //Log.d("ImageID", imageName);
                             }
@@ -92,11 +128,17 @@ public class TitleActivity extends AppCompatActivity {
 
         );
 
+        Volley.newRequestQueue(TitleActivity.this).add(jsonArrayRequest);
+
         title_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(TitleActivity.this, ContentActivity.class);
-                myIntent.putExtra("list", c_list);
+                myIntent.putExtra("title", c_list.get(position).getCtitle());
+                myIntent.putExtra("content", c_list.get(position).getCcontent());
+                myIntent.putExtra("comment", c_list.get(position).getCcomments());
+                myIntent.putExtra("country", country);
+                myIntent.putExtra("city", city);
                 startActivity(myIntent);
             }
         });
@@ -135,7 +177,41 @@ public class TitleActivity extends AppCompatActivity {
                                     return;
                                 }
 
-                                // add new data into DB
+                                try {
+                                    // add new data into DB
+                                    JSONObject jObject = new JSONObject();
+
+                                    String new_title = edit_title.getText().toString();
+                                    String new_content = edit_content.getText().toString();
+                                    jObject.put("country", country);
+                                    jObject.put("city", city);
+                                    jObject.put("title", new_title);
+                                    jObject.put("contents", new_content);
+                                    jObject.put("comments", "");
+                                    jObject.put("loginEmail", MainActivity.login_email);
+
+                                    JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jObject, new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    });
+
+                                    Volley.newRequestQueue(TitleActivity.this).add(jsonRequest);
+
+                                    the_list.add(new_title);
+                                    myTripAdapter = new MyTripAdapter(TitleActivity.this, the_list);
+                                    title_list.setAdapter(myTripAdapter);
+                                    c_list.add(new contents(new_title, new_content, new ArrayList<>()));
+                                } catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+
                             }
                         }).show();
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/profile_imageview"
+        android:id="@+id/profile_view"
         android:layout_width="106dp"
         android:layout_height="120dp"
         android:layout_marginStart="4dp"
@@ -24,7 +24,7 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profile_imageview"
+        app:layout_constraintStart_toEndOf="@+id/profile_view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profile_imageview"
+        app:layout_constraintStart_toEndOf="@+id/profile_view"
         app:layout_constraintTop_toBottomOf="@+id/name_textview" />
 
     <TextView
@@ -46,7 +46,7 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profile_imageview"
+        app:layout_constraintStart_toEndOf="@+id/profile_view"
         app:layout_constraintTop_toBottomOf="@+id/phonenum_textview" />
 
 </android.support.constraint.ConstraintLayout>
