@@ -57,8 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
         education = (TextView) findViewById(R.id.gender);
         birthdate = (TextView) findViewById(R.id.birthdate);
 
-        deleteButton = (ImageView) findViewById(R.id.delete);
-
 
         Uri uri = Uri.parse("http://socrip3.kaist.ac.kr:9180/uploads/"+intent.getStringExtra("image"));
         profile.setImageURI(uri);
@@ -79,33 +77,33 @@ public class ProfileActivity extends AppCompatActivity {
         education.setText(intent.getStringExtra("education"));
         birthdate.setText(intent.getStringExtra("birth date"));
 
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                        Request.Method.DELETE,
-                        url+"/"+intent.getStringExtra("name")+"/"+MainActivity.login_email,
-                        (String)null,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                // Do something with response
-                                //mTextView.setText(response.toString());
-                                Toast.makeText(getBaseContext(), intent.getStringExtra("name")+" Deleted", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // Do something when error occurred
-                            }
-                        }
-
-
-                );
-            }
-        });
+//        deleteButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+//                        Request.Method.DELETE,
+//                        url+"/"+intent.getStringExtra("name")+"/"+MainActivity.login_email,
+//                        (String)null,
+//                        new Response.Listener<JSONArray>() {
+//                            @Override
+//                            public void onResponse(JSONArray response) {
+//                                // Do something with response
+//                                //mTextView.setText(response.toString());
+//                                Toast.makeText(getBaseContext(), intent.getStringExtra("name")+" Deleted", Toast.LENGTH_LONG).show();
+//                                finish();
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                // Do something when error occurred
+//                            }
+//                        }
+//
+//
+//                );
+//            }
+//        });
     }
 
     @Override

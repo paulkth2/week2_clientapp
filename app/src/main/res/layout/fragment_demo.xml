@@ -22,26 +22,48 @@
     </LinearLayout>
 
 
-    <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/country"-->
+        <!--android:textSize = "20dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="174dp"-->
+        <!--android:text="Country" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/city"-->
+        <!--android:textSize = "20dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignStart="@+id/country"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginStart="12dp"-->
+        <!--android:layout_marginBottom="98dp"-->
+        <!--android:text="City" />-->
+    <Button
         android:id="@+id/country"
         android:textSize = "20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background = "#00FF0000"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="174dp"
         android:text="Country" />
 
-    <TextView
+    <Button
         android:id="@+id/city"
-        android:textSize = "20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/country"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="98dp"
-        android:text="City" />
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="96dp"
+        android:background = "#00FF0000"
+        android:text="City"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/button2"

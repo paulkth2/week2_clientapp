@@ -147,7 +147,7 @@ public class TitleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final View register_layout = LayoutInflater.from(TitleActivity.this)
-                        .inflate(R.layout.register_layout, null);
+                        .inflate(R.layout.contents_layout, null);
                 new MaterialStyledDialog.Builder(TitleActivity.this)
                         .setIcon(R.drawable.ic_home_black_24dp)
                         .setTitle("NEW CONTENT")

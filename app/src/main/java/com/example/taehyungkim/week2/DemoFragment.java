@@ -63,8 +63,10 @@ public class DemoFragment extends Fragment {
         ArrayList<String> italy = new ArrayList<String>();
         ArrayList<String> the_list = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_demo, container, false);
-        final TextView text_country = view.findViewById(R.id.country);
-        final TextView text_city = view.findViewById(R.id.city);
+//        final TextView text_country = view.findViewById(R.id.country);
+//        final TextView text_city = view.findViewById(R.id.city);
+        final Button text_country = view.findViewById(R.id.country);
+        final Button text_city = view.findViewById(R.id.city);
 
         start_button = (Button) view.findViewById(R.id.button2);
 
